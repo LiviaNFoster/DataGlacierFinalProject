@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html >
+<!-- From https://codepen.io/frytyler/pen/EGdtg-->
+<head>
+    <meta charset="UTF-8">
+    <title>ML API</title>
+    <!-- <link rel="stylesheet" type="text/css" href="../static/css/styles.css"> -->
+    <link href = 'https://fonts.googleapis.com/css?family=Pacifico' rel = 'stylesheet' type ='text/css'>
+    <link href = 'https://fonts.googleapis.com/css?family=Arimo' rel = 'stylesheet' type ='text/css'>
+    <link href = 'https://fonts.googleapis.com/css?family=Hind:300' rel = 'stylesheet' type ='text/css'>
+    <link rel = "stylesheet" type ="text/css" href ="{{ url_for('static', filename ='css/final_project.css') }}">
+</head>
+<body>
+<div class = "login">
+    <h1> Persistence of a Drug </h1>
+    <h2> General Patient Information:</h2>
+    <label for="Age"> Patient's Age:</label>
+    <input type="text" name="Age" placeholder="Type Age Here" required="required"/>
+    <br>
+    <label for="Gender"> Patient's Sex:</label>
+    <select name = "Gender" id="Gender">
+        <option value="0">Female</option>
+        <option value="1">Male</option>
+    </select>
+    <br>
+    <label for="Race">Patient's Race:</label>
+    <select name = "Race" id="Race">
+        <option value = "0.377264">Caucasian</option>
+        <option value = "0.331154">Hispanic</option>
+        <option value = "0.321222">African American</option>
+        <option value = "0.481340">Asian</option>
+        <option value = "0.352940">Other/Unknown</option>
+    </select>
+    <br>
+    <label for="Region">Patient's Region:</label>
+    <select name = "Region" id = "Region">
+        <option value = "0.325028">Midwest</option>
+        <option value = "0.395994">South</option>
+        <option value = "0.442900">West</option>
+        <option value = "0.420515">Northeast</option>
+        <option value = "0.410923">Other/Unknown</option>
+    </select>
+    <br>
+    <label for="NTM_Physician_Speciality">Attending Physician's Speciality:</label>
+    <select name = "NTM_Physician_Speciality" id = "NTM_Physician_Speciality">
+        <option value = "">COMEBACK TO LATER</option>
+    </select>
+    <br>
+    <label for="NTM_Specialist_Flag"> Is the Attending Physician a specialist?</label>
+    <select name = "NTM_Specialist_Flag" id = "NTM Specialist_Flag">
+        <option value = "0">No</option>
+        <option value = "1">Yes</option>
+    </select>
+    <br>
+    <h2>Nontuberculous Mycobacteria (NTM) Section: </h2>
+    <label for="Glucocorticoids_Record_Before_NTM">Were glucocorticoids recorded before the patient was diagnosed with NTM? </label>
+    <select name = "Glucocorticoids_Record_Before_NTM" id="Glucocorticoids_Record_Before_NTM">
+        <option value = "0">No</option>
+        <option value = "1">Yes</option>
+    </select>
+    <label for="Glucocorticoids_Record_During_prescription">Were glucocorticoids recorded for the patient's prescription?</label>
+    <select name="Glucocorticoids_Record_During_prescription" id="Glucocorticoids_Record_During_prescription">
+        <option value = "0">No</option>
+        <option value = "1">Yes</option>
+    </select>
+    <br>
+    <label for="DEXA_Scan_Freq_During_Prescription">How often did a patient receive a DEXA scan under prescription?</label>
+    <input type="text" name="DEXA_Scan_Freq_During_Prescription" placeholder="0" required="required"/>
+    <br>
+
+
+    <br>
+    <br>
+    <button type="submit" class="btn btn-primary btn-block btn-large">Predict Persistence </button>
+    <br>
+    <br>
+
+    {{ prediction_text }}
+
+</div>
+
+</body>
+</html>
