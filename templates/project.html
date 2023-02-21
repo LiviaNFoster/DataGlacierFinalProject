@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html >
+<!-- From https://codepen.io/frytyler/pen/EGdtg-->
+<head>
+    <meta charset="UTF-8">
+    <title>Drug Persistency</title>
+    <!-- <link rel="stylesheet" type="text/css" href="../static/css/styles.css"> -->
+    <link href = 'https://fonts.googleapis.com/css?family=Pacifico' rel = 'stylesheet' type ='text/css'>
+    <link href = 'https://fonts.googleapis.com/css?family=Arimo' rel = 'stylesheet' type ='text/css'>
+    <link href = 'https://fonts.googleapis.com/css?family=Hind:300' rel = 'stylesheet' type ='text/css'>
+    <link rel = "stylesheet" type ="text/css" href ="{{ url_for('static', filename ='css/final_project.css') }}">
+</head>
+<body>
+<form action="{{ url_for('predict')}}"method="post">
+<div class = "login">
+    <h1> Persistence of a Drug </h1>
+    <h2> General Patient Information:</h2>
+    <label for="Age">1. Patient's Age:</label>
+    <input type="text" name="Age" placeholder="Type Age Here" required="required" id="Age"/>
+    <br>
+    <label for="Gender">2. Patient's Sex:</label>
+    <select name = "Gender" id="Gender" required="required">
+        <option value="0">Female</option>
+        <option value="1">Male</option>
+    </select>
+    <br>
+    <label for="Race">3. Patient's Race:</label>
+    <select name = "Race" id="Race" required="required">
+        <option value = "0.377264">Caucasian</option>
+        <option value = "0.331154">Hispanic</option>
+        <option value = "0.321222">African American</option>
+        <option value = "0.481340">Asian</option>
+        <option value = "0.352940">Other/Unknown</option>
+    </select>
+    <br>
+    <label for="Region">4. Patient's Region:</label>
+    <select name = "Region" id = "Region" required="required">
+        <option value = "0.325028">Midwest</option>
+        <option value = "0.395994">South</option>
+        <option value = "0.442900">West</option>
+        <option value = "0.420515">Northeast</option>
+        <option value = "0.410923">Other/Unknown</option>
+    </select>
+    <br>
+    <label for="NTM_Specialist_Flag">5. Is the attending physician a specialist?</label>
+    <select name = "NTM_Specialist_Flag" id = "NTM_Specialist_Flag" required="required">
+        <option value = "0">No</option>
+        <option value = "1">Yes</option>
+    </select>
+    <br>
+    <label for="Adherence">6. Did the patient adhere to prescription instructions?</label>
+    <select name="Adherence" id="Adherence" required="required">
+        <option value = "0">No</option>
+        <option value = "1">Yes</option>
+    </select>
+    <br>
+    <label for="Idn_Indicator">7. Is the patient in the IDN system?</label>
+    <select name="Idn_Indicator" id="Idn_Indicator" required="required">
+        <option value = "0">No</option>
+        <option value = "1">Yes</option>
+    </select>
+    <br>
+    <h2>Nontuberculous Mycobacteria (NTM) Section: </h2>
+    <label for="Glucocorticoids_Record_Before_NTM">
+        8. Were glucocorticoids recorded before the patient was diagnosed with NTM? </label>
+    <select name = "Glucocorticoids_Record_Before_NTM" id="Glucocorticoids_Record_Before_NTM" required="required">
+        <option value = "0">No</option>
+        <option value = "1">Yes</option>
+    </select>
+    <br>
+    <label for="Glucocorticoids_Record_During_prescription">
+        9. Were glucocorticoids recorded for the patient's prescription?</label>
+    <select name="Glucocorticoids_Record_During_prescription" id="Glucocorticoids_Record_During_prescription" required="required">
+        <option value = "0">No</option>
+        <option value = "1">Yes</option>
+    </select>
+    <br>
+    <label for="DEXA_Scan_Freq_During_Prescription">
+        10.How often did a patient receive a DEXA scan under prescription?</label>
+    <input type="text" name="DEXA_Scan_Freq_During_Prescription" placeholder="Type Number Here" required="required" id = "DEXA_Scan_Freq_During_Prescription"/>
+    <br>
+
+
+    <label for="Fragility_Fracture_Before_NTM">
+        11. Did the patient have any fragility fractures before their first continuous therapy?
+    </label>
+    <select name="Fragility_Fracture_Before_NTM" id="Fragility_Fracture_Before_NTM" required="required">
+        <option value = "0">No</option>
+        <option value = "1">Yes</option>
+    </select>
+    <br>
+    <label for="Fragility_Fracture_During_Therapy">
+        12. Did the patient have any fragility fractures during their first continuous therapy?
+    </label>
+    <select name="Fragility_Fracture_During_Therapy" id="Fragility_Fracture_During_Therapy" required="required">
+        <option value = "0">No</option>
+        <option value = "1">Yes</option>
+    </select>
+    <br>
+    <label for="Risk_Before_NTM">
+        13. Did the patient have any risks before the treatments began?</label>
+    <select name="Risk_Before_NTM" id="Risk_Before_NTM" required="required">
+        <option value = "0">No</option>
+        <option value = "1">Yes</option>
+    </select>
+    <br>
+    <label for="Tscore_Before_NTM">
+        14. What was the patient's T-score before the beginning of prescription start date?
+    </label>
+    <select name="Tscore_Before_NTM" id="Tscore_Before_NTM" required="required">
+        <option value = "0">No</option>
+        <option value = "1">Yes</option>
+    </select>
+    <br>
+    <label for="Change_T_Score">
+        15. What was the change in T-score during treatment?</label>
+    <select name="Change_T_Score" id="Change_T_Score" required="required">
+        <option value = "0">No</option>
+        <option value = "1">Yes</option>
+    </select>
+    <br>
+    <label for="Injection_Usage_During_Prescription">
+        16. Were there any injectable drugs taken during treatment?</label>
+    <select name="Injection_Usage_During_Prescription" id="Injection_Usage_During_Prescription" required="required">
+        <option value = "0">No</option>
+        <option value = "1">Yes</option>
+    </select>
+    <br>
+    <h2>Patient's Pre-existing conditions and/or Comorbidities: </h2>
+    <br>
+    <label for="Comorb_Detected_For_Malignant_Neoplasms">
+        17. Does the patient have indicators for Malignant Neoplasms?</label>
+    <select name="Comorb_Detected_For_Malignant_Neoplasms" id="Comorb_Detected_For_Malignant_Neoplasms" required="required">
+        <option value = "0">No</option>
+        <option value = "1">Yes</option>
+    </select>
+    <br>
+    <label for="Comorb_Detected_For_Immunization">
+        18. Does the patient have indicators for immunization?</label>
+    <select name="Comorb_Detected_For_Immunization" id="Comorb_Detected_For_Immunization" required="required">
+        <option value = "0">No</option>
+        <option value = "1">Yes</option>
+    </select>
+    <br>
+    <label for="Comorb_Encntr_For_General_Exam_W_O_Complaint_Susp_Or_Reprtd_Dx">
+        19. Did the patient have any complaints during their GENERAL exam without a suspected or reported diagnosis?</label>
+    <select name="Comorb_Encntr_For_General_Exam_W_O_Complaint_Susp_Or_Reprtd_Dx"
+            id="Comorb_Encntr_For_General_Exam_W_O_Complaint_Susp_Or_Reprtd_Dx" required="required">
+        <option value = "0">No</option>
+        <option value = "1">Yes</option>
+    </select>
+    <br>
+    <label for="Comorb_Vitamin_D_Deficiency">
+        20. Does the patient have any indications of a vitamin D deficiency?</label>
+    <select name="Comorb_Vitamin_D_Deficiency" id="Comorb_Vitamin_D_Deficiency" required="required">
+        <option value = "0">No</option>
+        <option value = "1">Yes</option>
+    </select>
+    <br>
+    <label for="Comorb_Other_Joint_Disorder_Not_Elsewhere_Classified">
+        21. Does the patient have a history of any other joint disorders that are not elsewhere classified?</label>
+    <select name="Comorb_Other_Joint_Disorder_Not_Elsewhere_Classified"
+            id="Comorb_Other_Joint_Disorder_Not_Elsewhere_Classified" required="required">
+        <option value = "0">No</option>
+        <option value = "1">Yes</option>
+    </select>
+    <br>
+    <label for="Comorb_Encounter_For_Other_Special_Examination_W/O_Complaint_Suspected_or_Reported_Diagnosis">
+        22. Did the patient have any complaints during their SPECIALITY exam without a suspected or reported diagnosis?</label>
+    <select name="Comorb_Encounter_For_Other_Special_Examination_W/O_Complaint_Suspected_or_Reported_Diagnosis"
+            id="Comorb_Encounter_For_Other_Special_Examination_W/O_Complaint_Suspected_or_Reported_Diagnosis" required="required">
+        <option value = "0">No</option>
+        <option value = "1">Yes</option>
+    </select>
+    <br>
+    <label for="Comorb_Long_Term_Current_Drug_Therapy">
+        23. Is the patient currently under a regiment of a long-term drug therapy?</label>
+    <select name="Comorb_Long_Term_Current_Drug_Therapy" id="Comorb_Long_Term_Current_Drug_Therapy" required="required">
+        <option value = "0">No</option>
+        <option value = "1">Yes</option>
+    </select>
+    <br>
+    <label for="Comorb_Dorsalgia">
+        24. Does the patient present with symptoms of dorsalgia?</label>
+    <select name="Comorb_Dorsalgia" id="Comorb_Dorsalgia" required="required">
+        <option value = "0">No</option>
+        <option value = "1">Yes</option>
+    </select>
+    <br>
+    <label for="Comorb_Personal_History_Of_Other_Diseases_And_Conditions">
+        25. Does the patient have any personal history of other diseases and/or conditions?</label>
+    <select name="Comorb_Personal_History_Of_Other_Diseases_And_Conditions"
+            id="Comorb_Personal_History_Of_Other_Diseases_And_Conditions" required="required">
+        <option value = "0">No</option>
+        <option value = "1">Yes</option>
+    </select>
+    <br>
+    <label for="Comorb_Other_Disorders_Of_Bone_Density_And_Structure">
+        26. Does the patient have any history of other bone density and/or structure disorders?</label>
+    <select name="Comorb_Other_Disorders_Of_Bone_Density_And_Structure"
+            id="Comorb_Other_Disorders_Of_Bone_Density_And_Structure" required="required">
+        <option value = "0">No</option>
+        <option value = "1">Yes</option>
+    </select>
+    <br>
+    <label for="Comorb_Disorders_of_lipoprotein_metabolism_and_other_lipidemias">
+        27. Does the patient have lipoprotein metabolism disorder and/or any other lipidemia disorders?</label>
+    <select name="Comorb_Disorders_of_lipoprotein_metabolism_and_other_lipidemias"
+            id="Comorb_Disorders_of_lipoprotein_metabolism_and_other_lipidemias" required="required">
+        <option value = "0">No</option>
+        <option value = "1">Yes</option>
+    </select>
+    <br>
+    <label for="Comorb_Osteoporosis_without_current_pathological_fracture">
+        28. Does the patient have osteoporosis without a current pathological fracture?</label>
+    <select name="Comorb_Osteoporosis_without_current_pathological_fracture"
+            id="Comorb_Osteoporosis_without_current_pathological_fracture" required="required">
+        <option value = "0">No</option>
+        <option value = "1">Yes</option>
+    </select>
+    <br>
+    <label for="Comorb_Personal_history_of_malignant_neoplasm">
+        29. Does the patient have a personal history of malignant neoplasm?</label>
+    <select name="Comorb_Personal_history_of_malignant_neoplasm"
+            id="Comorb_Personal_history_of_malignant_neoplasm" required="required">
+        <option value = "0">No</option>
+        <option value = "1">Yes</option>
+    </select>
+    <br>
+    <label for="Comorb_Gastro_esophageal_reflux_disease">
+        30. Does the patient have a history of Gastro-esophageal reflux disease?</label>
+    <select name="Comorb_Gastro_esophageal_reflux_disease"
+            id="Comorb_Gastro_esophageal_reflux_disease" required="required">
+        <option value = "0">No</option>
+        <option value = "1">Yes</option>
+    </select>
+    <br>
+    <h2>Concomitant Treatments:</h2>
+    <h3>All drugs are recorded that occurred within the prior 365 days from first prescription date.</h3>
+    <label for="Concom_Cholesterol_And_Triglyceride_Regulating_Preparations">
+        31. Prior to current treatment, were cholesterol and triglyceride regulating preparations made?</label>
+    <select name="Concom_Cholesterol_And_Triglyceride_Regulating_Preparations"
+            id="Concom_Cholesterol_And_Triglyceride_Regulating_Preparations" required="required">
+        <option value = "0">No</option>
+        <option value = "1">Yes</option>
+    </select>
+    <br>
+    <label for="Concom_Narcotics">
+        32. Prior to current treatment, were narcotics prescribed?</label>
+    <select name="Concom_Narcotics"
+            id="Concom_Narcotics" required="required">
+        <option value = "0">No</option>
+        <option value = "1">Yes</option>
+    </select>
+    <br>
+    <label for="Concom_Systemic_Corticosteroids_Plain">
+        33. Prior to current treatment, were systemic corticosteroids prescribed?</label>
+    <select name="Concom_Systemic_Corticosteroids_Plain"
+            id="Concom_Systemic_Corticosteroids_Plain" required="required">
+        <option value = "0">No</option>
+        <option value = "1">Yes</option>
+    </select>
+    <br>
+    <label for="Concom_Anti_Depressants_And_Mood_Stabilisers">
+        34. Prior to current treatment, were anti-depressants and mood stabilisers prescribed?</label>
+    <select name="Concom_Anti_Depressants_And_Mood_Stabilisers"
+            id="Concom_Anti_Depressants_And_Mood_Stabilisers" required="required">
+        <option value = "0">No</option>
+        <option value = "1">Yes</option>
+    </select>
+    <br>
+    <label for="Concom_Fluoroquinolones">
+        35. Prior to current treatment, were fluoroquinolones prescribed?</label>
+    <select name="Concom_Fluoroquinolones"
+            id="Concom_Fluoroquinolones" required="required">
+        <option value = "0">No</option>
+        <option value = "1">Yes</option>
+    </select>
+    <br>
+    <label for="Concom_Cephalosporins">
+        36. Prior to current treatment, were cephalosporins prescribed?</label>
+    <select name="Concom_Cephalosporins"
+            id="Concom_Cephalosporins" required="required">
+        <option value = "0">No</option>
+        <option value = "1">Yes</option>
+    </select>
+    <br>
+    <label for="Concom_Macrolides_And_Similar_Types">
+        37. Prior to current treatment, were macrolides and/or similar prescribed?</label>
+    <select name="Concom_Macrolides_And_Similar_Types"
+            id="Concom_Macrolides_And_Similar_Types" required="required">
+        <option value = "0">No</option>
+        <option value = "1">Yes</option>
+    </select>
+    <br>
+    <label for="Concom_Broad_Spectrum_Penicillins">
+        38. Prior to current treatment, were any broad spectrum penicillins prescribed?</label>
+    <select name="Concom_Broad_Spectrum_Penicillins"
+            id="Concom_Broad_Spectrum_Penicillins" required="required">
+        <option value = "0">No</option>
+        <option value = "1">Yes</option>
+    </select>
+    <br>
+    <label for="Concom_Anaesthetics_General">
+        39. Prior to current treatment, were any general anaesthetics prescribed?</label>
+    <select name="Concom_Anaesthetics_General"
+            id="Concom_Anaesthetics_General" required="required">
+        <option value = "0">No</option>
+        <option value = "1">Yes</option>
+    </select>
+    <br>
+    <label for="Concom_Viral_Vaccines">
+        40. Prior to current treatment, did the patient receive any viral vaccines?</label>
+    <select name="Concom_Viral_Vaccines"
+            id="Concom_Viral_Vaccines" required="required">
+        <option value = "0">No</option>
+        <option value = "1">Yes</option>
+    </select>
+    <br>
+    <h2>Health Risks:</h2>
+    <label for="Risk_Type_1_Insulin_Dependent_Diabetes">
+        41. Is the patient at risk for type 1 insulin dependent diabetes?</label>
+    <select name="Risk_Type_1_Insulin_Dependent_Diabetes"
+            id="Risk_Type_1_Insulin_Dependent_Diabetes" required="required">
+        <option value = "0">No</option>
+        <option value = "1">Yes</option>
+    </select>
+    <br>
+    <label for="Risk_Osteogenesis_Imperfecta">
+        42. Is the patient at risk for osteogenesis imperfecta?</label>
+    <select name="Risk_Osteogenesis_Imperfecta"
+            id="Risk_Osteogenesis_Imperfecta" required="required">
+        <option value = "0">No</option>
+        <option value = "1">Yes</option>
+    </select>
+    <br>
+    <label for="Risk_Rheumatoid_Arthritis">
+       43. Is the patient at risk for rheumatoid arthritis?</label>
+    <select name="Risk_Rheumatoid_Arthritis"
+            id="Risk_Rheumatoid_Arthritis" required="required">
+        <option value = "0">No</option>
+        <option value = "1">Yes</option>
+    </select>
+    <br>
+    <label for="Risk_Untreated_Chronic_Hyperthyroidism">
+        44. Is the patient at risk for untreated chronic hyperthyroidism?</label>
+    <select name="Risk_Untreated_Chronic_Hyperthyroidism"
+            id="Risk_Untreated_Chronic_Hyperthyroidism" required="required">
+        <option value = "0">No</option>
+        <option value = "1">Yes</option>
+    </select>
+    <br>
+    <label for="Risk_Untreated_Chronic_Hypogonadism">
+        45. Is the patient at risk for untreated chronic hypogonadism?</label>
+    <select name="Risk_Untreated_Chronic_Hypogonadism"
+            id="Risk_Untreated_Chronic_Hypogonadism" required="required">
+        <option value = "0">No</option>
+        <option value = "1">Yes</option>
+    </select>
+    <br>
+    <label for="Risk_Untreated_Early_Menopause">
+        46. Is the patient at risk for untreated early menopause?</label>
+    <select name="Risk_Untreated_Early_Menopause"
+            id="Risk_Untreated_Early_Menopause" required="required">
+        <option value = "0">No</option>
+        <option value = "1">Yes</option>
+    </select>
+    <br>
+    <label for="Risk_Patient_Parent_Fractured_Their_Hip">
+        47. Does the patient have a family history of someone fracturing their hip?</label>
+    <select name="Risk_Patient_Parent_Fractured_Their_Hip"
+            id="Risk_Patient_Parent_Fractured_Their_Hip" required="required">
+        <option value = "0">No</option>
+        <option value = "1">Yes</option>
+    </select>
+    <br>
+    <label for="Risk_Smoking_Tobacco">
+        48. Does the patient smoke tobacco products?</label>
+    <select name="Risk_Smoking_Tobacco"
+            id="Risk_Smoking_Tobacco" required="required">
+        <option value = "0">No</option>
+        <option value = "1">Yes</option>
+    </select>
+    <br>
+    <label for="Risk_Chronic_Malnutrition_Or_Malabsorption">
+        49. Does the patient have a history of chronic malnutrition or malabsorption?</label>
+    <select name="Risk_Chronic_Malnutrition_Or_Malabsorption"
+            id="Risk_Chronic_Malnutrition_Or_Malabsorption" required="required">
+        <option value = "0">No</option>
+        <option value = "1">Yes</option>
+    </select>
+    <br>
+    <label for="Risk_Chronic_Liver_Disease">
+        50. Does the patient have a history of chronic liver disease?</label>
+    <select name="Risk_Chronic_Liver_Disease"
+            id="Risk_Chronic_Liver_Disease" required="required">
+        <option value = "0">No</option>
+        <option value = "1">Yes</option>
+    </select>
+    <br>
+    <label for="Risk_Family_History_Of_Osteoporosis">
+        51. Does the patient have a family history of osteoporosis?</label>
+    <select name="Risk_Family_History_Of_Osteoporosis"
+            id="Risk_Family_History_Of_Osteoporosis" required="required">
+        <option value = "0">No</option>
+        <option value = "1">Yes</option>
+    </select>
+    <br>
+    <label for="Risk_Low_Calcium_Intake">
+        52. Does the patient have a history of low calcium intake?</label>
+    <select name="Risk_Low_Calcium_Intake"
+            id="Risk_Low_Calcium_Intake" required="required">
+        <option value = "0">No</option>
+        <option value = "1">Yes</option>
+    </select>
+    <br>
+    <label for="Risk_Vitamin_D_Insufficiency">
+        53. Does the patient have a history of vitamin D insufficiency?</label>
+    <select name="Risk_Vitamin_D_Insufficiency"
+            id="Risk_Vitamin_D_Insufficiency" required="required">
+        <option value = "0">No</option>
+        <option value = "1">Yes</option>
+    </select>
+    <br>
+    <label for="Risk_Poor_Health_Frailty">
+        54. Does the patient have a history of poor health or frailty?</label>
+    <select name="Risk_Poor_Health_Frailty"
+            id="Risk_Poor_Health_Frailty" required="required">
+        <option value = "0">No</option>
+        <option value = "1">Yes</option>
+    </select>
+    <br>
+    <label for="Risk_Excessive_Thinness">
+        55. Does the patient have a history of excessive thinness?</label>
+    <select name="Risk_Excessive_Thinness"
+            id="Risk_Excessive_Thinness" required="required">
+        <option value = "0">No</option>
+        <option value = "1">Yes</option>
+    </select>
+    <br>
+    <label for="Risk_Hysterectomy_Oophorectomy">
+        56. Did the patient have a hysterectomy oophorectomy performed?</label>
+    <select name="Risk_Hysterectomy_Oophorectomy"
+            id="Risk_Hysterectomy_Oophorectomy" required="required">
+        <option value = "0">No</option>
+        <option value = "1">Yes</option>
+    </select>
+    <br>
+    <label for="Risk_Estrogen_Deficiency">
+        57. Does the patient have a history of estrogen deficiency?</label>
+    <select name="Risk_Estrogen_Deficiency"
+            id="Risk_Estrogen_Deficiency" required="required">
+        <option value = "0">No</option>
+        <option value = "1">Yes</option>
+    </select>
+    <br>
+    <label for="Risk_Immobilization">
+        58. Does the patient have a history of immobilization?</label>
+    <select name="Risk_Immobilization"
+            id="Risk_Immobilization" required="required">
+        <option value = "0">No</option>
+        <option value = "1">Yes</option>
+    </select>
+    <br>
+    <label for="Risk_Recurring_Falls">
+        59. Does the patient have a history of recurring falls?</label>
+    <select name="Risk_Recurring_Falls"
+            id="Risk_Recurring_Falls" required="required">
+        <option value = "0">No</option>
+        <option value = "1">Yes</option>
+    </select>
+
+
+    <br>
+    <br>
+    <button type="submit" class="btn btn-primary btn-block btn-large">Predict Persistence </button>
+    </form>
+    <br>
+    <br>
+
+    {{ prediction_text }}
+
+</div>
+
+</body>
+</html>

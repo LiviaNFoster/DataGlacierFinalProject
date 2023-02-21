@@ -3,8 +3,8 @@ import numpy as np
 import pickle
 from flask import Flask, request, render_template
 
-app_final = Flask(__name__, template_folder='template')
-final_model = pickle.load(open('final_model.pickle', 'rb'))
+app_final = Flask(__name__)
+final_model = pickle.load(open('final_model.pkl', 'rb'))
 
 
 @app_final.route('/', methods=['GET'])
